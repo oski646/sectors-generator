@@ -94,8 +94,29 @@ function initSectors(sectors, callback, config = {
             sectors[sectors.indexOf(foundSector)].highlighted = false
         }
         foundSector = tempFoundSector
-        callback(event, foundSector)
+        const coordinates = getCartesianPoint(getCursorPosition(event))
+        callback(event, foundSector, coordinates)
     })
+
+    // Canvas to cartesian points translation
+    function getCartesianPoint(point) {
+        const {
+            x,
+            y
+        } = point;
+        return {
+            x: getCartesianX(x),
+            y: getCartesianY(y)
+        }
+    }
+
+    function getCartesianX(x) {
+        return (x - (canvas.clientWidth / 2)) * sizeRatio * 2
+    }
+
+    function getCartesianY(y) {
+        return ((canvas.clientWidth / 2) - y) * sizeRatio * 2
+    }
 
     // Cartesian to canvas points translation
     function getCanvasPoint(point) {

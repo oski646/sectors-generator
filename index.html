@@ -7,7 +7,8 @@
     <title>oski646/sectors-generator</title>
 </head>
 <body>
-    <canvas id="sectors" width="700" height="700" style="float: left;"></canvas>
+    <canvas id="sectors" width="800" height="800" style="float: left;"></canvas>
+    <div id="coordinates"></div>
     <div id="sector-info"></div>
     <div id="nested-sectors"></div>
     <script src="script.js"></script>
@@ -325,7 +326,10 @@
             }
         }
 
-        initSectors(sampleSectorsData, function (event, sector) {
+        initSectors(sampleSectorsData, function (event, sector, coordinates) {
+            if(coordinates != null){
+                document.getElementById("coordinates").innerText = "X: " + Math.round(coordinates.x) + " | Z: " + Math.round(coordinates.y)
+            }
             if (sector != null) {
                 document.getElementById("sector-info").innerText =
                     "Sektor: " + sector.name +
