@@ -70,7 +70,7 @@ Prosta wtyczka stworzona dla osób, które chcą na swojej stronie internetowej 
 
 `sectors` - lista z obiektami sektorów
 
-`callback` - funkcja, która zwraca argumenty `event` i `sector`
+`callback` - funkcja, która zwraca argumenty `event`, `sector` i `coordinates`
 
 `config` - konfiguracja
 
