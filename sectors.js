@@ -55,6 +55,8 @@ function initSectors(sectors, callback, config = {
     }
 
     document.addEventListener("mousemove", (event) => {
+        if (event.target.id !== config.canvasID) return callback(event)
+
         // Cursor position
         const {
             x,
