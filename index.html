@@ -1,357 +1,51 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>oski646/sectors-generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>oski646/sectors-generator</title>
 </head>
 <body>
-    <canvas id="sectors" width="800" height="800" style="float: left;"></canvas>
-    <div id="coordinates"></div>
-    <div id="sector-info"></div>
-    <div id="nested-sectors"></div>
-    <script src="script.js"></script>
-    <script>
-        const sampleSectorsData = [{
-            name: "S1",
-            corners: [{
-                    x: -1500,
-                    y: -1500
-                },
-                {
-                    x: -225,
-                    y: 150,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
+  <canvas id="sectors" width="800" height="800" style="float: left;"></canvas>
+  <div id="coordinates"></div>
+  <div id="sector-info"></div>
+  <div id="nested-sectors"></div>
+  <script src="sectors.js"></script>
+  <script src="data.js"></script>
+  <script>
+    const config = {
+      canvasID: "sectors",
+      mapBorder: 3000,
+      highlightColor: 'rgba(255, 255, 255, 0.25)',
+      defaultOffset: {
+        text: {
+          x: -7,
+          y: 5
         },
-        {
-            name: "S2",
-            corners: [{
-                    x: -225,
-                    y: -1500
-                },
-                {
-                    x: 1425,
-                    y: -225,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S3",
-            corners: [{
-                    x: 150,
-                    y: -225
-                },
-                {
-                    x: 1425,
-                    y: 1425,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S4",
-            corners: [{
-                    x: -1500,
-                    y: 150
-                },
-                {
-                    x: 150,
-                    y: 1425,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S5",
-            corners: [{
-                    x: 1500,
-                    y: -3000
-                },
-                {
-                    x: 3000,
-                    y: -1500,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S6",
-            corners: [{
-                    x: -3000,
-                    y: -3000
-                },
-                {
-                    x: -1500,
-                    y: -1500,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S7",
-            corners: [{
-                    x: -3000,
-                    y: 1500
-                },
-                {
-                    x: -1500,
-                    y: 3000,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S8",
-            corners: [{
-                    x: 1425,
-                    y: 1425
-                },
-                {
-                    x: 3000,
-                    y: 3000,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S9",
-            corners: [{
-                    x: -3000,
-                    y: -1500
-                },
-                {
-                    x: -1500,
-                    y: 0,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S10",
-            corners: [{
-                    x: -3000,
-                    y: 0
-                },
-                {
-                    x: -1500,
-                    y: 1500,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S11",
-            corners: [{
-                    x: -1500,
-                    y: 1425
-                },
-                {
-                    x: -75,
-                    y: 3000,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S12",
-            corners: [{
-                    x: -75,
-                    y: 1425
-                },
-                {
-                    x: 1425,
-                    y: 3000,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S13",
-            corners: [{
-                    x: 1425,
-                    y: -75
-                },
-                {
-                    x: 3000,
-                    y: 1425,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S14",
-            corners: [{
-                    x: 1425,
-                    y: -1500
-                },
-                {
-                    x: 3000,
-                    y: -75,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S15",
-            corners: [{
-                    x: -1500,
-                    y: -3000
-                },
-                {
-                    x: 0,
-                    y: -1500,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.25)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "S16",
-            corners: [{
-                    x: 0,
-                    y: -3000
-                },
-                {
-                    x: 1500,
-                    y: -1500,
-                }
-            ],
-            color: 'rgba(0, 0, 0, 0.75)',
-            highlighted: false,
-            tps: 19.98,
-            online: 152,
-        },
-        {
-            name: "SPAWN",
-            corners: [{
-                    x: -225,
-                    y: -225
-                },
-                {
-                    x: 150,
-                    y: 150,
-                }
-            ],
-            color: 'rgba(255, 0, 0, 0.5)',
-            text: {
-                offsetX: -19,
-                offsetY: 4
-            },
-            highlighted: false,
-            nestedSectors: [{
-                    name: "SPAWN01",
-                    tps: 19.29,
-                    online: 152,
-                },
-                {
-                    name: "SPAWN02",
-                    tps: 19.29,
-                    online: 152,
-                },
-                {
-                    name: "SPAWN03",
-                    tps: 19.29,
-                    online: 152,
-                },
-                {
-                    name: "SPAWN04",
-                    tps: 19.29,
-                    online: 152,
-                }
-            ]
-        },
-    ]
-
-        const sampleConfig = {
-            canvasID: "sectors",
-            mapBorder: 3000,
-            highlightColor: 'rgba(255, 255, 255, 0.25)',
-            defaultOffset: {
-                text: {
-                    x: -7,
-                    y: 5
-                },
-                tps: {
-                    x: -27,
-                    y: 18
-                }
-            }
+        tps: {
+          x: -27,
+          y: 18
         }
+      }
+    }
 
-        initSectors(sampleSectorsData, function (event, sector, coordinates) {
-            if(coordinates != null){
-                document.getElementById("coordinates").innerText = "X: " + Math.round(coordinates.x) + " | Z: " + Math.round(coordinates.y)
-            }
-            if (sector != null) {
-                document.getElementById("sector-info").innerText =
-                    "Sektor: " + sector.name +
-                    (sector.hasOwnProperty("tps") ? ("\n" + "TPS: " + sector.tps) : "") +
-                    (sector.hasOwnProperty("online") ? ("\n" + "Online: " + sector.online) : "")
+    const setCoordinatesText = (coordinates) => {
+      document.getElementById("coordinates").innerText =
+          `X: ${Math.round(coordinates.x)} | Z: ${Math.round(coordinates.y)}`
+    }
 
-                if (sector.hasOwnProperty("nestedSectors")) {
-                    document.getElementById("nested-sectors").innerText = "\nDodatkowe sektory: \n"
-                    sector.nestedSectors.forEach(nestedSector => {
-                        document.getElementById("nested-sectors").innerText +=
-                            "Sektor: " + nestedSector.name +
-                            (nestedSector.hasOwnProperty("tps") ? (", TPS: " + nestedSector.tps) : "") +
-                            (nestedSector.hasOwnProperty("online") ? (", online: " + nestedSector.online) : "") +
-                            "\n"
-                    })
-                } else {
-                    document.getElementById("nested-sectors").innerText = ""
-                }
-            } else {
-                document.getElementById("sector-info").innerText = "Nie znaleziono sektora."
-            }
-        }, sampleConfig);
-    </script>
+    const setSectorInfoText = (sector) => {
+      const sectorInfo = []
+      if (sector.name) sectorInfo.push(`Sector: ${sector.name}`)
+      if (sector.tps) sectorInfo.push(`TPS: ${sector.tps}`)
+      if (sector.online) sectorInfo.push(`Online: ${sector.online}`)
+      document.getElementById("sector-info").innerText = sectorInfo.join(' | ')
+    }
+
+    initSectors(sectors, (event, sector, coordinates) => {
+      if (coordinates) setCoordinatesText(coordinates)
+      if (sector) setSectorInfoText(sector)
+    }, config);
+  </script>
 </body>
 </html>
